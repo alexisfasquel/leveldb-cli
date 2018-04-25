@@ -14,6 +14,7 @@ import (
 	"github.com/liderman/leveldb-cli/cliutil"
 	"bytes"
 	"bufio"
+	"strings"
 )
 
 // It shows the contents of the database prefix filtering.
@@ -30,6 +31,39 @@ func ShowByPrefix(prefix, format string) string {
 		dbh.NewIterator(util.BytesPrefix([]byte(prefix)), nil),
 		format,
 	)
+}
+
+func ShowBySuffix(suffix, format string) string {
+	if (!isConnected) {
+		return AppError(ERR_DB_DOES_NOT_OPEN)
+	}
+
+	var b bytes.Buffer
+	writer := bufio.NewWriter(&b)
+	w := new(tabwriter.Writer)
+
+	w.Init(writer, 0, 8, 0, '\t', 0)
+	fmt.Fprintln(w, "Key\t| Value")
+
+	iter := dbh.NewIterator(nil, nil)
+	for iter.Next() {
+		key := iter.Key()
+		if (strings.HasSuffix(string(key), suffix)) {
+			value := iter.Value()
+			fmt.Fprintf(w, "%s\t| %s\n", string(key), cliutil.ToString(format, value))
+		}
+	}
+
+	w.Flush()
+
+	iter.Release()
+	err := iter.Error()
+	if (err != nil) {
+		return "Error iterator!"
+	}
+
+	writer.Flush()
+	return string(b.Bytes())
 }
 
 // It shows the contents of the database range filtering.

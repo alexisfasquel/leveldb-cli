@@ -15,7 +15,7 @@ import (
 	"github.com/chzyer/readline"
 	"strconv"
 	"strings"
-	"github.com/liderman/leveldb-cli/commands"
+	"github.com/alexisfasquel/leveldb-cli/commands"
 	"os"
 	"path"
 	"runtime"
@@ -102,6 +102,7 @@ func main() {
 				break
 			// Sub-command: prefix
 			case "prefix":
+				fmt.Println("asdas")
 				if (len(args) < 3 || len(args) > 4) {
 					fmt.Println("Bad format. Please use 'show prefix PREFIX [FORMAT]'")
 					break
@@ -113,6 +114,22 @@ func main() {
 				}
 
 				fmt.Println(commands.ShowByPrefix(args[2], format))
+				break
+			
+			// Sub-command: suffix
+			case "suffix":
+				fmt.Println("asdas")
+				if (len(args) < 3 || len(args) > 4) {
+					fmt.Println("Bad format. Please use 'show suffix PREFIX [FORMAT]'")
+					break
+				}
+
+				format :=  ""
+				if (len(args) == 4) {
+					format = args[3]
+				}
+
+				fmt.Println(commands.ShowBySuffix(args[2], format))
 				break
 			}
 
