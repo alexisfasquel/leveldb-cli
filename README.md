@@ -93,6 +93,13 @@ Displays all values the keys that begin with the prefix.
  * `KEY_PREFIX` - The prefix to list of keys
  * `FORMAT` - Data Display Format (Optional)
 
+ > show suffix `KEY_SUFFIX` [`FORMAT`]
+
+Displays all values and keys that begin with the prefix.
+ * `KEY_SUFFIX` - The suffix to list of keys
+ * `FORMAT` - Data Display Format (Optional)
+
+
 > show range `START` `LIMIT` [`FORMAT`]
 
 Displays all values, the keys of which are in the range between "START" and "LIMIT".
